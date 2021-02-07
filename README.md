@@ -8,15 +8,18 @@ Tech Used: Express, Typescript, Mongoose, bcryptjs, jsonwebtoken
 
 Tasks completed:
 
-## Get users - DONE From Postman choose GET method. Request URL: localhost:1337/users/get/all
+## Get users - DONE 
+<br/> From Postman choose GET method. Request URL: localhost:1337/users/get/all
 
 *******************************************************************************************************************************************************************************
 
-## Get user - DONE From Postman choose GET method. Request URL: localhost:1337/users/get/one?username='username string'
+## Get user - DONE 
+<br/>From Postman choose GET method. Request URL: localhost:1337/users/get/one?username='username string'
 
 *******************************************************************************************************************************************************************************
 
-## Register - DONE From Postman choose POST method. Request URL: localhost:1337/users/register <br/> In the Body choose raw, JSON. <br/> Enter 
+## Register - DONE 
+<br/>From Postman choose POST method. Request URL: localhost:1337/users/register <br/> In the Body choose raw, JSON. <br/> Enter 
 ```json
 { 
   "username" : "user1",
@@ -28,7 +31,8 @@ username and password are required, mobtoken is optional.
 
 *******************************************************************************************************************************************************************************
 
-## Sign In - DONE From Postman choose POST method. Request URL: localhost:1337/users/login  <br/> In the Body choose raw, JSON. <br/> Enter   
+## Sign In - DONE 
+<br/>From Postman choose POST method. Request URL: localhost:1337/users/login  <br/> In the Body choose raw, JSON. <br/> Enter   
 ```json
 { 
   "username" : "user1",
@@ -41,7 +45,8 @@ username and password are required. <br/>
 
 *******************************************************************************************************************************************************************************
 
-## Update User - DONE From Postman choose PUT method. Request URL: localhost:1337/users/update <br/> In the Header:  <br/> type "Authorization" into key column  <br/>  type "Bearer " + saved token from Sign In function.  <br/> In the
+## Update User - DONE 
+<br/> From Postman choose PUT method. Request URL: localhost:1337/users/update <br/> In the Header:  <br/> type "Authorization" into key column  <br/>  type "Bearer " + saved token from Sign In function.  <br/> In the
 Body choose raw, JSON. <br/> Enter 
 ```json
 { 
@@ -52,5 +57,6 @@ Body choose raw, JSON. <br/> Enter
 type either or both. Being Signed In is required!
 *******************************************************************************************************************************************************************************
 
-## Delete User - DONE From Postman choose DELETE method. Request URL: localhost:1337/users/remove <br/> In the Header: <br/> type "Authorization" into key column <br/> type "Bearer " + saved token from Sign In function <br/>
+## Delete User - DONE 
+<br/> From Postman choose DELETE method. Request URL: localhost:1337/users/remove <br/> In the Header: <br/> type "Authorization" into key column <br/> type "Bearer " + saved token from Sign In function <br/>
 Being Signed In is required!
