@@ -34,9 +34,9 @@ Sign In - DONE From Postman choose POST method. Request URL: localhost:1337/user
   "username" : "user1",
   "password" : "password"
 } 
-username and password are required.
-```
 
+```
+username and password are required. <br/>
 P.S.: After successful Authentication token is returned from res. Save it for Update and Delete functions.
 
 *******************************************************************************************************************************************************************************
@@ -50,8 +50,8 @@ Body choose raw, JSON. <br/> Enter
 } 
 type either or both. Being Signed In is required!
 ```
-
+type either or both. Being Signed In is required!
 *******************************************************************************************************************************************************************************
 
-Delete User - DONE From Postman choose DELETE method. Request URL: localhost:1337/users/remove <br/> In the Header: type "Authorization" into key column type "Bearer " + saved token from Sign In function <br/>
+Delete User - DONE From Postman choose DELETE method. Request URL: localhost:1337/users/remove <br/> In the Header: <br/> type "Authorization" into key column <br/> type "Bearer " + saved token from Sign In function <br/>
 Being Signed In is required!
