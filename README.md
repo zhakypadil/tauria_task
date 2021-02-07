@@ -17,16 +17,18 @@ Get user - DONE From Postman choose GET method. Request URL: localhost:1337/user
 *******************************************************************************************************************************************************************************
 
 Register - DONE From Postman choose POST method. Request URL: localhost:1337/users/register In the Body choose raw, JSON. Enter 
-`{ 
+```json
+{ 
   "username" : "user1",
   "password" : "password", 
   "mobtoken" : "" 
-}`
+}
+```
 username and password are required, mobtoken is optional.
 
 *******************************************************************************************************************************************************************************
 
-Sign In - DONE From Postman choose POST method. Request URL: localhost:1337/users/login In the Body choose raw, JSON. Enter `{ "username" : "user1","password" : "password"}` username and password are
+Sign In - DONE From Postman choose POST method. Request URL: localhost:1337/users/login In the Body choose raw, JSON. Enter   `{ "username" : "user1","password" : "password"}` username and password are
 required.
 
 P.S.: After successful Authentication token is returned from res. Save it for Update and Delete functions.
