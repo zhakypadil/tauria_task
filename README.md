@@ -61,6 +61,6 @@ type either or both. Being Signed In is required!
 ## Delete User - DONE 
 <br/> From Postman choose DELETE method. Request URL: localhost:1337/users/remove 
 <br/> In the Header: 
-<br/> &nbsp type "Authorization" into key column 
-<br/> &nbsp type "Bearer " + saved token from Sign In function <br/>
+<br/> `\t` type "Authorization" into key column 
+<br/> type "Bearer " + saved token from Sign In function <br/>
 Being Signed In is required!
