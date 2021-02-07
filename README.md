@@ -15,6 +15,7 @@ Tasks completed:
 
 ## Get user - DONE 
 <br/>From Postman choose GET method. Request URL: localhost:1337/users/get/one?username='username string'
+<br/> 'username string' is the username being searched. Must be Typed!
 
 *******************************************************************************************************************************************************************************
 
