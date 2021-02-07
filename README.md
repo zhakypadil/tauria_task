@@ -37,18 +37,17 @@ Sign In - DONE From Postman choose POST method. Request URL: localhost:1337/user
 
 ```
 username and password are required. <br/>
-P.S.: After successful Authentication token is returned from res. Save it for Update and Delete functions.
+ <br/>P.S.: After successful Authentication token is returned from res. Save it for Update and Delete functions.
 
 *******************************************************************************************************************************************************************************
 
-Update User - DONE From Postman choose PUT method. Request URL: localhost:1337/users/update <br/> In the Header: type "Authorization" into key column type "Bearer " + saved token from Sign In function.  <br/> In the
+Update User - DONE From Postman choose PUT method. Request URL: localhost:1337/users/update <br/> In the Header:  <br/> type "Authorization" into key column  <br/>  type "Bearer " + saved token from Sign In function.  <br/> In the
 Body choose raw, JSON. <br/> Enter 
 ```json
 { 
   "password" : "newpassword",
   "mobtoken" : "new token value"
 } 
-type either or both. Being Signed In is required!
 ```
 type either or both. Being Signed In is required!
 *******************************************************************************************************************************************************************************
