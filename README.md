@@ -16,7 +16,7 @@ Get user - DONE From Postman choose GET method. Request URL: localhost:1337/user
 
 *******************************************************************************************************************************************************************************
 
-Register - DONE From Postman choose POST method. Request URL: localhost:1337/users/register In the Body choose raw, JSON. Enter 
+Register - DONE From Postman choose POST method. Request URL: localhost:1337/users/register<\br> In the Body choose raw, JSON. Enter 
 ```json
 { 
   "username" : "user1",
