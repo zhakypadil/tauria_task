@@ -16,7 +16,7 @@ Get user - DONE From Postman choose GET method. Request URL: localhost:1337/user
 
 *******************************************************************************************************************************************************************************
 
-Register - DONE From Postman choose POST method. Request URL: localhost:1337/users/register  In the Body choose raw, JSON. Enter 
+Register - DONE From Postman choose POST method. Request URL: localhost:1337/users/register <br/> In the Body choose raw, JSON. <br/> Enter 
 ```json
 { 
   "username" : "user1",
@@ -28,7 +28,7 @@ username and password are required, mobtoken is optional.
 
 *******************************************************************************************************************************************************************************
 
-Sign In - DONE From Postman choose POST method. Request URL: localhost:1337/users/login In the Body choose raw, JSON. Enter   
+Sign In - DONE From Postman choose POST method. Request URL: localhost:1337/users/login  <br/> In the Body choose raw, JSON. <br/> Enter   
 ```json
 { 
   "username" : "user1",
@@ -41,8 +41,8 @@ P.S.: After successful Authentication token is returned from res. Save it for Up
 
 *******************************************************************************************************************************************************************************
 
-Update User - DONE From Postman choose PUT method. Request URL: localhost:1337/users/update In the Header: type "Authorization" into key column type "Bearer " + save token from Sign In function In the
-Body choose raw, JSON. Enter 
+Update User - DONE From Postman choose PUT method. Request URL: localhost:1337/users/update <br/> In the Header: type "Authorization" into key column type "Bearer " + saved token from Sign In function.  <br/> In the
+Body choose raw, JSON. <br/> Enter 
 ```json
 { 
   "password" : "newpassword",
@@ -53,5 +53,5 @@ type either or both. Being Signed In is required!
 
 *******************************************************************************************************************************************************************************
 
-Delete User - DONE From Postman choose DELETE method. Request URL: localhost:1337/users/remove In the Header: type "Authorization" into key column type "Bearer " + save token from Sign In function
+Delete User - DONE From Postman choose DELETE method. Request URL: localhost:1337/users/remove <br/> In the Header: type "Authorization" into key column type "Bearer " + saved token from Sign In function <br/>
 Being Signed In is required!
