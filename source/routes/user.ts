@@ -2,6 +2,7 @@ import express from 'express';
 import controller from '../controllers/user';
 import extractJWT from '../middleware/extractJWT';
 
+/** Router function */
 const router = express.Router();
 
 router.put('/update', extractJWT, controller.update);

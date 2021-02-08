@@ -5,8 +5,20 @@ import User from '../models/user';
 import controller from '../controllers/user';
 import logging from '../config/logging';
 
-const NAMESPACE = 'Room';
-var msg = '';
+const NAMESPACE = 'Room'; //For Debugging Purposes
+var msg = ''; //For Debugging Purposes
+
+/** Below are all routes associated with User management:
+ *
+ * create = Create a room
+ * change = Change host
+ * join = Join Room via guid
+ * leave = Leave Room via guid
+ * roominfo = prints out information about a Room via guid
+ * roomsinfo = prints out all Rooms where current User sits.
+ *
+ */
+
 const create = async (req: Request, res: Response, next: NextFunction) => {
     const roomname = req.body.roomname;
     const hostname = req.body.hostname;

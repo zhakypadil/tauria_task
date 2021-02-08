@@ -4,9 +4,10 @@ import logging from '../config/logging';
 import controller from '../controllers/user';
 import { Request, Response, NextFunction } from 'express';
 
-const NAMESPACE = 'Auth';
-var msg = '';
+const NAMESPACE = 'Auth'; //For Debugging Purposes
+var msg = ''; //For Debugging Purposes
 
+/** This function checks if User is logged in to access routes that require auth */
 const extractJWT = (req: Request, res: Response, next: NextFunction) => {
     logging.info(NAMESPACE, 'Validating token');
     let token = controller.globalVariables.TOKEN;

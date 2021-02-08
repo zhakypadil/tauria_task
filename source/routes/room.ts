@@ -2,6 +2,7 @@ import express from 'express';
 import controller from '../controllers/room';
 import extractJWT from '../middleware/extractJWT';
 
+/** Router function */
 const router = express.Router();
 
 router.post('/create', extractJWT, controller.create);

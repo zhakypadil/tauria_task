@@ -5,13 +5,25 @@ import logging from '../config/logging';
 import User from '../models/user';
 import signJWT from '../functions/signJTW';
 
-const NAMESPACE = 'User';
-var msg = '';
+const NAMESPACE = 'User'; //For Debugging Purposes
+var msg = ''; //For Debugging Purposes
 
+/** Not the most elegant solution, but provides with basic control over what User's session it is.*/
 var globalVariables = {
     CURUSERNAME: '',
     TOKEN: ''
 };
+
+/** Below are all routes associated with User management:
+ *
+ * remove = deletes the user
+ * update = updates password or optional mobile token
+ * register = registers new user
+ * login = signs in existing users
+ * getAllUsers = prints out all Users from the Database
+ * getOneUser = prints out particular user
+ *
+ */
 
 const remove = async (req: Request, res: Response, next: NextFunction) => {
     if (!globalVariables.CURUSERNAME) {

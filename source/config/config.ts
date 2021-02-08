@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
 
+/** All Initial Configurations are set here */
+
 dotenv.config();
 
 const MONGO_OPTIONS = {

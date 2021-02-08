@@ -41,15 +41,6 @@ router.use(express.json());
 router.use('/users', userRoutes);
 router.use('/rooms/', roomRoutes);
 
-/** Error Handling */
-// router.use((req, res, next) => {
-//     const error = new Error('Not found');
-
-//     res.status(404).json({
-//         message: error.message
-//     });
-// });
-
+/** Activating The Server */
 const httpServer = http.createServer(router);
-
 httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`));

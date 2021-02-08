@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import IUser from '../interfaces/user';
 
+/** Schema of the User object*/
 const UserSchema: Schema = new Schema(
     {
         username: { type: String, required: true, unique: true },
