@@ -5,19 +5,16 @@ import controller from '../controllers/user';
 import { Request, Response, NextFunction } from 'express';
 
 const NAMESPACE = 'Auth';
+var msg = '';
 
 const extractJWT = (req: Request, res: Response, next: NextFunction) => {
     logging.info(NAMESPACE, 'Validating token');
-
-    //console.log(controller.globalVariables.TOKEN);
-    //console.log(controller.globalVariables.CURUSERNAME);
-
-    //console.log(req.headers.authorization);
-    let token = controller.globalVariables.TOKEN; //req.headers.authorization?.split(' ')[1];
+    let token = controller.globalVariables.TOKEN;
 
     if (token) {
         jwt.verify(token, config.server.token.secret, (error, decoded) => {
             if (error) {
+                logging.info(NAMESPACE, error.message, error);
                 return res.status(404).json({
                     message: error,
                     error
@@ -28,8 +25,10 @@ const extractJWT = (req: Request, res: Response, next: NextFunction) => {
             }
         });
     } else {
+        msg = 'Unauthorized';
+        logging.info(NAMESPACE, msg);
         return res.status(401).json({
-            message: 'Unauthorized'
+            message: msg
         });
     }
 };

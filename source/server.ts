@@ -14,7 +14,7 @@ const router = express();
 const getConnection = async () => {
     try {
         await mongoose.connect(config.mongo.url, config.mongo.options);
-        console.log('Connection to MongoDB is successful!');
+        logging.info(NAMESPACE, 'Connection to MongoDB is successful!');
     } catch (error) {
         logging.error(NAMESPACE, error.message, error);
     }
@@ -42,13 +42,13 @@ router.use('/users', userRoutes);
 router.use('/rooms/', roomRoutes);
 
 /** Error Handling */
-router.use((req, res, next) => {
-    const error = new Error('Not found');
+// router.use((req, res, next) => {
+//     const error = new Error('Not found');
 
-    res.status(404).json({
-        message: error.message
-    });
-});
+//     res.status(404).json({
+//         message: error.message
+//     });
+// });
 
 const httpServer = http.createServer(router);
 

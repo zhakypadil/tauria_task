@@ -6,6 +6,7 @@ import User from '../models/user';
 import signJWT from '../functions/signJTW';
 
 const NAMESPACE = 'User';
+var msg = '';
 
 var globalVariables = {
     CURUSERNAME: '',
@@ -14,73 +15,88 @@ var globalVariables = {
 
 const remove = async (req: Request, res: Response, next: NextFunction) => {
     if (!globalVariables.CURUSERNAME) {
+        msg = 'You Are Not Logged In!';
+        logging.error(NAMESPACE, msg);
         return res.status(401).json({
-            message: 'You Are Not Logged In!'
+            message: msg
         });
     }
     await User.findOneAndDelete({ username: globalVariables.CURUSERNAME }).then((user) => {
-        if (user) {
-            user.deleteOne();
-        } else {
+        if (!user) {
+            msg = 'Cannot Delete A User That Does Not Exist!';
+            logging.error(NAMESPACE, msg);
             return res.status(401).json({
-                message: 'Cannot Delete User That Does Not Exist!'
+                message: msg
+            });
+        } else {
+            return res.status(200).json({
+                message: `User ${globalVariables.CURUSERNAME} has been successfully deleted`
             });
         }
     });
-    return res.status(200).json({
-        message: `User ${globalVariables.CURUSERNAME} has been successfully deleted`
-    });
 };
 const update = async (req: Request, res: Response, next: NextFunction) => {
-    if (!globalVariables.CURUSERNAME) {
-        return res.status(401).json({
-            message: 'You Are Not Logged In!'
-        });
-    }
-    logging.info(NAMESPACE, 'Token Validated, User Authorized.');
     let { password, mobtoken } = req.body;
-    if (!password && !mobtoken) {
+
+    if (!globalVariables.CURUSERNAME) {
+        msg = 'You Are Not Logged In!';
+        logging.error(NAMESPACE, msg);
         return res.status(401).json({
-            message: 'Nothing to Update'
+            message: msg
         });
-    }
+    } else if (!password && !mobtoken) {
+        msg = 'Nothing to Update';
+        logging.error(NAMESPACE, msg);
+        return res.status(401).json({
+            message: msg
+        });
+    } else {
+        if (password) {
+            await User.findOne({ username: globalVariables.CURUSERNAME }).then((user) => {
+                if (user) {
+                    bcryptjs.hash(password, 10, (hashError, hash) => {
+                        if (hash) {
+                            user.password = hash;
+                            user.save();
+                        } else {
+                            msg = 'Error With Password Hashing';
+                            logging.error(NAMESPACE, msg);
+                            return res.status(401).json({
+                                message: msg
+                            });
+                        }
+                    });
+                } else {
+                    msg = 'Cannot Update Password, User Does Not Exist';
+                    logging.error(NAMESPACE, msg);
+                    return res.status(401).json({
+                        message: msg
+                    });
+                }
+            });
+        }
 
-    if (password) {
-        await User.findOne({ username: globalVariables.CURUSERNAME }).then((user) => {
-            if (user) {
-                bcryptjs.hash(password, 10, (hashError, hash) => {
-                    if (hash) {
-                        user.password = hash;
-                        user.save();
-                    } else {
-                        return res.status(401).json({
-                            message: 'Error With Password Hashing'
-                        });
-                    }
-                });
-            } else {
-                return res.status(401).json({
-                    message: 'Cannot Update Password, User Does Not Exist'
-                });
-            }
-        });
-    }
+        if (mobtoken) {
+            await User.findOne({ username: globalVariables.CURUSERNAME }).then((user) => {
+                if (user) {
+                    user.mobtoken = mobtoken;
+                    user.save();
+                } else {
+                    msg = 'Cannot Update Optional Mobile Token, The User Does Not Exist';
+                    logging.error(NAMESPACE, msg);
+                    return res.status(401).json({
+                        message: msg
+                    });
+                }
+            });
+        }
 
-    if (mobtoken) {
-        User.findOne({ username: globalVariables.CURUSERNAME }).then((user) => {
-            if (user) {
-                user.mobtoken = mobtoken;
-                user.save();
-            } else {
-                return res.status(401).json({
-                    message: 'Cannot Update Optional Mobile Token, The user DNE'
-                });
-            }
+        msg = 'Required fields have been successfully updated';
+        logging.info(NAMESPACE, msg);
+        return res.status(200).json({
+            message: msg
         });
     }
-    return res.status(200).json({
-        message: 'Required fields have been successfully updated'
-    });
 };
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
@@ -88,6 +104,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 
     await bcryptjs.hash(password, 10, (hashError, hash) => {
         if (hashError) {
+            logging.error(NAMESPACE, hashError.message, hashError);
             return res.status(401).json({
                 message: hashError.message,
                 error: hashError
@@ -104,11 +121,14 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
         return _user
             .save()
             .then((user) => {
+                msg = 'User Successfully Registered';
+                logging.info(NAMESPACE, msg, user);
                 return res.status(201).json({
                     user
                 });
             })
             .catch((error) => {
+                logging.error(NAMESPACE, error.message, error);
                 return res.status(500).json({
                     message: error.message,
                     error
@@ -123,8 +143,10 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         .exec()
         .then((users) => {
             if (users.length !== 1) {
+                msg = 'Such User Does Not Exist';
+                logging.error(NAMESPACE, msg);
                 return res.status(401).json({
-                    message: 'Such User Does Not Exist'
+                    message: msg
                 });
             }
 
@@ -132,6 +154,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
                 if (result) {
                     signJWT(users[0], (_error, token) => {
                         if (_error) {
+                            logging.error(NAMESPACE, _error.message, _error);
                             return res.status(500).json({
                                 message: _error.message,
                                 error: _error
@@ -139,24 +162,28 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
                         } else if (token) {
                             globalVariables.CURUSERNAME = username;
                             globalVariables.TOKEN = token;
-                            //CURUSERNAME = username;
+                            msg = 'Login successful';
+                            logging.info(NAMESPACE, msg);
                             return res.status(200).json({
-                                message: 'Login successful',
+                                message: msg,
                                 token: token,
-                                user: users[0]
+                                user: users[0].username
                             });
                         }
                     });
                 } else {
+                    msg = 'Password Mismatch';
+                    logging.error(NAMESPACE, msg);
                     return res.status(401).json({
-                        message: 'Password Mismatch'
+                        message: msg
                     });
                 }
             });
         })
         .catch((err) => {
-            console.log(err);
+            logging.error(NAMESPACE, err.message, err);
             res.status(500).json({
+                message: err.message,
                 error: err
             });
         });
@@ -166,12 +193,15 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
         .select('-password')
         .exec()
         .then((users) => {
+            msg = 'All Users Returned';
+            logging.info(NAMESPACE, msg);
             return res.status(200).json({
                 users: users,
                 count: users.length
             });
         })
         .catch((error) => {
+            logging.info(NAMESPACE, error.message, error);
             return res.status(500).json({
                 message: error.message,
                 error
@@ -185,16 +215,21 @@ const getOneUser = async (req: Request, res: Response, next: NextFunction) => {
         .exec()
         .then((users) => {
             if (users.length != 0) {
+                msg = 'User Found!';
+                logging.info(NAMESPACE, msg);
                 return res.status(200).json({
                     users: users
                 });
             } else {
+                msg = 'This User Does Not Exist!';
+                logging.error(NAMESPACE, msg);
                 return res.status(500).json({
-                    message: 'This User Does Not Exist!'
+                    message: msg
                 });
             }
         })
         .catch((error) => {
+            logging.error(NAMESPACE, error.message, error);
             return res.status(500).json({
                 message: error.message,
                 error
