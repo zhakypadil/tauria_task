@@ -69,3 +69,8 @@ type either or both. Being Signed In is required!
 ## Delete User - DONE
 
 <br/> From Postman choose DELETE method. Request URL: localhost:1337/users/remove <br/> Being Signed In is required!
+
+## Room Management - DONE
+
+<br/> Second part is completed. I uploaded json file with the collection of appropriate requests. <br/> Requests were imported from Postman, collection v2. <br/> If you would like to test this
+application, please refer to the "Tauria.postman_collection.json"

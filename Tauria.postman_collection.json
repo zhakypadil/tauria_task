@@ -1,0 +1,256 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Tauria",
+		"_postman_id": "cf59b972-b524-dd9a-497e-9d7c74b16ef1",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register user",
+			"request": {
+				"url": "localhost:1337/users/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"user4\",\n\t\"password\" : \"password\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"request": {
+				"url": "localhost:1337/users/get/all",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get specific user",
+			"request": {
+				"url": {
+					"raw": "localhost:1337/users/get/one?username=user11",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"users",
+						"get",
+						"one"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "user11",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "log in",
+			"request": {
+				"url": "localhost:1337/users/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"user11\",\n\t\"password\" : \"password\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete user",
+			"request": {
+				"url": "localhost:1337/users/remove",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Last Logged in user gets deleted"
+			},
+			"response": []
+		},
+		{
+			"name": "update password or optional mob token",
+			"request": {
+				"url": "localhost:1337/users/update",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\" : \"password\",\n\t\"mobtoken\" : \"newtokenmoken\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create a room",
+			"request": {
+				"url": "localhost:1337/rooms/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"roomname\" : \"roomFinalTest1\",\n\t\"hostname\" : \"user11\",\n\t\"capacity\" : 4,\n\t\"participants\" : [ \n\t\t\"user6\",\n\t\t\"user4\"\n\t\t]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Change host",
+			"request": {
+				"url": "localhost:1337/rooms/change",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"guid\" : \"60214b6bab77d61e8074cf33\",\n\t\"newhost\" : \"user11\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Leave a room",
+			"request": {
+				"url": "localhost:1337/rooms/leave",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"guid\" : \"60214b6bab77d61e8074cf33\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Join a room",
+			"request": {
+				"url": "localhost:1337/rooms/join",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"guid\" : \"60214b6bab77d61e8074cf33\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get information about a room",
+			"request": {
+				"url": {
+					"raw": "localhost:1337/rooms/get/one?guid=60214b6bab77d61e8074cf33",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"rooms",
+						"get",
+						"one"
+					],
+					"query": [
+						{
+							"key": "guid",
+							"value": "60214b6bab77d61e8074cf33",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "guid",
+						"value": "6020fabd001ce353f0acab36",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all rooms User is in",
+			"request": {
+				"url": "localhost:1337/rooms/get/all",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
