@@ -6,15 +6,19 @@ import User from '../models/user';
 import signJWT from '../functions/signJTW';
 
 const NAMESPACE = 'User';
-var CURUSERNAME = '';
 
-const remove = (req: Request, res: Response, next: NextFunction) => {
-    if (!CURUSERNAME) {
+var globalVariables = {
+    CURUSERNAME: '',
+    TOKEN: ''
+};
+
+const remove = async (req: Request, res: Response, next: NextFunction) => {
+    if (!globalVariables.CURUSERNAME) {
         return res.status(401).json({
             message: 'You Are Not Logged In!'
         });
     }
-    User.findOneAndDelete({ username: CURUSERNAME }).then((user) => {
+    await User.findOneAndDelete({ username: globalVariables.CURUSERNAME }).then((user) => {
         if (user) {
             user.deleteOne();
         } else {
@@ -24,11 +28,11 @@ const remove = (req: Request, res: Response, next: NextFunction) => {
         }
     });
     return res.status(200).json({
-        message: `User ${CURUSERNAME} has been successfully deleted`
+        message: `User ${globalVariables.CURUSERNAME} has been successfully deleted`
     });
 };
-const update = (req: Request, res: Response, next: NextFunction) => {
-    if (!CURUSERNAME) {
+const update = async (req: Request, res: Response, next: NextFunction) => {
+    if (!globalVariables.CURUSERNAME) {
         return res.status(401).json({
             message: 'You Are Not Logged In!'
         });
@@ -42,7 +46,7 @@ const update = (req: Request, res: Response, next: NextFunction) => {
     }
 
     if (password) {
-        User.findOne({ username: CURUSERNAME }).then((user) => {
+        await User.findOne({ username: globalVariables.CURUSERNAME }).then((user) => {
             if (user) {
                 bcryptjs.hash(password, 10, (hashError, hash) => {
                     if (hash) {
@@ -63,7 +67,7 @@ const update = (req: Request, res: Response, next: NextFunction) => {
     }
 
     if (mobtoken) {
-        User.findOne({ username: CURUSERNAME }).then((user) => {
+        User.findOne({ username: globalVariables.CURUSERNAME }).then((user) => {
             if (user) {
                 user.mobtoken = mobtoken;
                 user.save();
@@ -79,10 +83,10 @@ const update = (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-const register = (req: Request, res: Response, next: NextFunction) => {
+const register = async (req: Request, res: Response, next: NextFunction) => {
     let { username, password, mobtoken } = req.body;
 
-    bcryptjs.hash(password, 10, (hashError, hash) => {
+    await bcryptjs.hash(password, 10, (hashError, hash) => {
         if (hashError) {
             return res.status(401).json({
                 message: hashError.message,
@@ -112,10 +116,10 @@ const register = (req: Request, res: Response, next: NextFunction) => {
             });
     });
 };
-const login = (req: Request, res: Response, next: NextFunction) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
     let { username, password } = req.body;
 
-    User.find({ username })
+    await User.find({ username })
         .exec()
         .then((users) => {
             if (users.length !== 1) {
@@ -133,7 +137,9 @@ const login = (req: Request, res: Response, next: NextFunction) => {
                                 error: _error
                             });
                         } else if (token) {
-                            CURUSERNAME = username;
+                            globalVariables.CURUSERNAME = username;
+                            globalVariables.TOKEN = token;
+                            //CURUSERNAME = username;
                             return res.status(200).json({
                                 message: 'Login successful',
                                 token: token,
@@ -155,8 +161,8 @@ const login = (req: Request, res: Response, next: NextFunction) => {
             });
         });
 };
-const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
-    User.find()
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+    await User.find()
         .select('-password')
         .exec()
         .then((users) => {
@@ -173,8 +179,8 @@ const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-const getOneUser = (req: Request, res: Response, next: NextFunction) => {
-    User.find(req.query)
+const getOneUser = async (req: Request, res: Response, next: NextFunction) => {
+    await User.find(req.query)
         .select('-password')
         .exec()
         .then((users) => {
@@ -196,4 +202,4 @@ const getOneUser = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-export default { remove, update, register, login, getAllUsers, getOneUser };
+export default { remove, update, register, login, getAllUsers, getOneUser, globalVariables };

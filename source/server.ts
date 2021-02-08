@@ -5,6 +5,7 @@ import logging from './config/logging';
 import config from './config/config';
 import mongoose from 'mongoose';
 import userRoutes from './routes/user';
+import roomRoutes from './routes/room';
 
 const NAMESPACE = 'Server';
 const router = express();
@@ -38,6 +39,7 @@ router.use(express.json());
 
 /** Routes */
 router.use('/users', userRoutes);
+router.use('/rooms/', roomRoutes);
 
 /** Error Handling */
 router.use((req, res, next) => {
