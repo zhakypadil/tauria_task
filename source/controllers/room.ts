@@ -149,7 +149,44 @@ const leave = async (req: Request, res: Response, next: NextFunction) => {
             });
     }
 };
-const roominfo = async (req: Request, res: Response, next: NextFunction) => {};
-const roomsinfo = async (req: Request, res: Response, next: NextFunction) => {};
+const roominfo = async (req: Request, res: Response, next: NextFunction) => {
+    const { guid } = req.query;
+
+    if (!guid) {
+        return res.status(401).json({
+            message: 'Please provide a unique Room ID!'
+        });
+    }
+    await Room.findOne({ _id: guid })
+        .then((room) => {
+            if (room) {
+                return res.status(200).json({
+                    message: `Room ID is: ${guid}. Room name is: ${room.roomname}. The host is: ${room.hostname}. Room's capacity is: ${room.capacity}.
+                        Participants are: ${room.participants}`
+                });
+            } else {
+                return res.status(401).json({
+                    message: 'Room with this ID does not exist!'
+                });
+            }
+        })
+        .catch((err) => {
+            return res.status(401).json({
+                message: 'Room with this ID does not exist!'
+            });
+        });
+};
+const roomsinfo = async (req: Request, res: Response, next: NextFunction) => {
+    await Room.find({ participants: controller.globalVariables.CURUSERNAME }).then((room) => {
+        var msg = '';
+        for (var i = 0; i < room.length - 1; i++) {
+            msg += room[i].roomname + ', ';
+        }
+        msg += room[room.length - 1].roomname + '. ';
+        return res.status(200).json({
+            message: msg
+        });
+    });
+};
 
 export default { create, change, join, leave, roominfo, roomsinfo };
